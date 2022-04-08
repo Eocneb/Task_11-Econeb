@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>calculator.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+calculator.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">edu.coe.hughes</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.awt.event.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">javax.swing.*</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.awt.*</span><span class="s0">;</span>
+<span class="s0">class </span><span class="s1">calculator </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s0">implements </span><span class="s1">ActionListener {</span>
+
+    <span class="s0">static </span><span class="s1">JTextField l</span><span class="s0">;</span>
+
+    <span class="s0">static </span><span class="s1">JFrame frame</span><span class="s0">;</span>
+
+    <span class="s0">static </span><span class="s1">calculator c</span><span class="s0">;</span>
+
+    <span class="s1">String s0</span><span class="s0">, </span><span class="s1">s1</span><span class="s0">, </span><span class="s1">s2</span><span class="s0">;</span>
+
+    <span class="s1">calculator()</span>
+    <span class="s1">{</span>
+        <span class="s1">s0 = s1 = s2 = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public static final </span><span class="s1">String[][] BUTTON_TEXTS = {</span>
+            <span class="s1">{</span><span class="s2">&quot;7&quot;</span><span class="s0">, </span><span class="s2">&quot;8&quot;</span><span class="s0">, </span><span class="s2">&quot;9&quot;</span><span class="s0">, </span><span class="s2">&quot;/&quot;</span><span class="s1">}</span><span class="s0">,</span>
+            <span class="s1">{</span><span class="s2">&quot;4&quot;</span><span class="s0">, </span><span class="s2">&quot;5&quot;</span><span class="s0">, </span><span class="s2">&quot;6&quot;</span><span class="s0">, </span><span class="s2">&quot;*&quot;</span><span class="s1">}</span><span class="s0">,</span>
+            <span class="s1">{</span><span class="s2">&quot;1&quot;</span><span class="s0">, </span><span class="s2">&quot;2&quot;</span><span class="s0">, </span><span class="s2">&quot;3&quot;</span><span class="s0">, </span><span class="s2">&quot;-&quot;</span><span class="s1">}</span><span class="s0">,</span>
+            <span class="s1">{</span><span class="s2">&quot;0&quot;</span><span class="s0">, </span><span class="s2">&quot; &quot;</span><span class="s0">, </span><span class="s2">&quot;=&quot;</span><span class="s0">, </span><span class="s2">&quot;+&quot;</span><span class="s1">}</span>
+    <span class="s1">}</span><span class="s0">;</span>
+    <span class="s0">public static final </span><span class="s1">Font BTN_FONT = </span><span class="s0">new </span><span class="s1">Font(Font.SANS_SERIF</span><span class="s0">, </span><span class="s1">Font.BOLD</span><span class="s0">, </span><span class="s3">24</span><span class="s1">)</span><span class="s0">;</span>
+
+    <span class="s0">private static void </span><span class="s1">createAndShowGui() {</span>
+
+        <span class="s0">try </span><span class="s1">{</span>
+            <span class="s1">UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">catch </span><span class="s1">(Exception e) {</span>
+            <span class="s1">System.err.println(e.getMessage())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">l = </span><span class="s0">new </span><span class="s1">JTextField(</span><span class="s3">10</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">l.setEditable(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">l.setFont(BTN_FONT.deriveFont(Font.PLAIN))</span><span class="s0">;</span>
+        <span class="s1">JPanel btnPanel = </span><span class="s0">new </span><span class="s1">JPanel(</span><span class="s0">new </span><span class="s1">GridLayout(BUTTON_TEXTS.length</span><span class="s0">,</span>
+                <span class="s1">BUTTON_TEXTS[</span><span class="s3">0</span><span class="s1">].length))</span><span class="s0">;</span>
+
+        <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">i = </span><span class="s3">0</span><span class="s0">; </span><span class="s1">i &lt; BUTTON_TEXTS.length</span><span class="s0">; </span><span class="s1">i++) {</span>
+            <span class="s0">for </span><span class="s1">(</span><span class="s0">int </span><span class="s1">j = </span><span class="s3">0</span><span class="s0">; </span><span class="s1">j &lt; BUTTON_TEXTS[i].length</span><span class="s0">; </span><span class="s1">j++) {</span>
+                <span class="s1">JButton btn = </span><span class="s0">new </span><span class="s1">JButton(BUTTON_TEXTS[i][j])</span><span class="s0">;</span>
+                <span class="s1">btn.addActionListener(c)</span><span class="s0">;</span>
+                <span class="s1">btn.setFont(BTN_FONT)</span><span class="s0">;</span>
+                <span class="s1">btnPanel.add(btn)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s1">JPanel mainPanel = </span><span class="s0">new </span><span class="s1">JPanel(</span><span class="s0">new </span><span class="s1">BorderLayout())</span><span class="s0">;</span>
+        <span class="s1">mainPanel.add(l</span><span class="s0">, </span><span class="s1">BorderLayout.PAGE_START)</span><span class="s0">;</span>
+        <span class="s1">mainPanel.add(btnPanel</span><span class="s0">, </span><span class="s1">BorderLayout.CENTER)</span><span class="s0">;</span>
+
+        <span class="s1">frame = </span><span class="s0">new </span><span class="s1">JFrame(</span><span class="s2">&quot;Calculator&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)</span><span class="s0">;</span>
+        <span class="s1">frame.getContentPane().add(mainPanel)</span><span class="s0">;</span>
+        <span class="s1">frame.pack()</span><span class="s0">;</span>
+        <span class="s1">frame.setLocationRelativeTo(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">frame.setVisible(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public static void </span><span class="s1">main(String[] args) {</span>
+        <span class="s1">SwingUtilities.invokeLater(</span><span class="s0">new </span><span class="s1">Runnable() {</span>
+
+            <span class="s0">public void </span><span class="s1">run() {</span>
+                <span class="s1">createAndShowGui()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">actionPerformed(ActionEvent e)</span>
+    <span class="s1">{</span>
+        <span class="s1">String s = e.getActionCommand()</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">((s.charAt(</span><span class="s3">0</span><span class="s1">) &gt;= </span><span class="s2">'0' </span><span class="s1">&amp;&amp; s.charAt(</span><span class="s3">0</span><span class="s1">) &lt;= </span><span class="s2">'9'</span><span class="s1">) || s.charAt(</span><span class="s3">0</span><span class="s1">) == </span><span class="s2">'.'</span><span class="s1">) {</span>
+            <span class="s0">if </span><span class="s1">(!s1.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">))</span>
+                <span class="s1">s2 = s2 + s</span><span class="s0">;</span>
+            <span class="s0">else</span>
+                <span class="s1">s0 = s0 + s</span><span class="s0">;</span>
+
+            <span class="s1">l.setText(s0 + s1 + s2)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else if </span><span class="s1">(s.charAt(</span><span class="s3">0</span><span class="s1">) == </span><span class="s2">'C'</span><span class="s1">) {</span>
+            <span class="s1">s0 = s1 = s2 = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span>
+
+            <span class="s1">l.setText(s0 + s1 + s2)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else if </span><span class="s1">(s.charAt(</span><span class="s3">0</span><span class="s1">) == </span><span class="s2">'='</span><span class="s1">) {</span>
+
+            <span class="s0">double </span><span class="s1">te</span><span class="s0">;</span>
+
+            <span class="s0">if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;+&quot;</span><span class="s1">))</span>
+                <span class="s1">te = (Double.parseDouble(s0) + Double.parseDouble(s2))</span><span class="s0">;</span>
+            <span class="s0">else if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;-&quot;</span><span class="s1">))</span>
+                <span class="s1">te = (Double.parseDouble(s0) - Double.parseDouble(s2))</span><span class="s0">;</span>
+            <span class="s0">else if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;/&quot;</span><span class="s1">))</span>
+                <span class="s1">te = (Double.parseDouble(s0) / Double.parseDouble(s2))</span><span class="s0">;</span>
+            <span class="s0">else</span>
+                <span class="s1">te = (Double.parseDouble(s0) * Double.parseDouble(s2))</span><span class="s0">;</span>
+
+            <span class="s1">l.setText(s0 + s1 + s2 + </span><span class="s2">&quot;=&quot; </span><span class="s1">+ te)</span><span class="s0">;</span>
+
+            <span class="s1">s0 = Double.toString(te)</span><span class="s0">;</span>
+
+            <span class="s1">s1 = s2 = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s0">else </span><span class="s1">{</span>
+            <span class="s0">if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">) || s2.equals(</span><span class="s2">&quot;&quot;</span><span class="s1">))</span>
+                <span class="s1">s1 = s</span><span class="s0">;</span>
+            <span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">double </span><span class="s1">te</span><span class="s0">;</span>
+
+                <span class="s0">if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;+&quot;</span><span class="s1">))</span>
+                    <span class="s1">te = (Double.parseDouble(s0) + Double.parseDouble(s2))</span><span class="s0">;</span>
+                <span class="s0">else if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;-&quot;</span><span class="s1">))</span>
+                    <span class="s1">te = (Double.parseDouble(s0) - Double.parseDouble(s2))</span><span class="s0">;</span>
+                <span class="s0">else if </span><span class="s1">(s1.equals(</span><span class="s2">&quot;/&quot;</span><span class="s1">))</span>
+                    <span class="s1">te = (Double.parseDouble(s0) / Double.parseDouble(s2))</span><span class="s0">;</span>
+                <span class="s0">else</span>
+                    <span class="s1">te = (Double.parseDouble(s0) * Double.parseDouble(s2))</span><span class="s0">;</span>
+
+                <span class="s1">s0 = Double.toString(te)</span><span class="s0">;</span>
+
+                <span class="s1">s1 = s</span><span class="s0">;</span>
+
+                <span class="s1">s2 = </span><span class="s2">&quot;&quot;</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">l.setText(s0 + s1 + s2)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+<span class="s4">//current value: int</span>
+<span class="s4">//setmode(operator)</span>
+<span class="s4">//processnumber(int): int</span>
+<span class="s4">//add(n1,n2)</span>
+<span class="s4">//subtract(n1,n2)</span>
+<span class="s4">//multiply(n1,n2)</span>
+
+<span class="s4">//listen for numberButton press</span>
+<span class="s4">//listen for operator process</span>
+<span class="s4">//setdisplay(num)</span>
+<span class="s4">//setcontroller(c)</span></pre>
+</body>
+</html>
