@@ -132,6 +132,7 @@ class calculator extends JFrame implements ActionListener {
         }
     }
 }
+//Unimplemented:
 //current value: int
 //setmode(operator)
 //processnumber(int): int
